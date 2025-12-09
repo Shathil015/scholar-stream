@@ -1,8 +1,8 @@
-import { FaFacebookF, FaTwitter, FaGoogle } from "react-icons/fa";
 import Logo from "../../components/Logo";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router";
 import UseAuth from "../../hooks/UseAuth";
+import axios from "axios";
 
 const Register = () => {
   const {
@@ -11,12 +11,35 @@ const Register = () => {
     handleSubmit,
   } = useForm();
 
-  const { registerUser } = UseAuth();
+  const { registerUser, updateUserProfile } = UseAuth();
 
   const handleRegistration = (data) => {
-    console.log("After register ", data);
-    registerUser(data.email, data.password)
-      .then((result) => [console.log(result.user)])
+    console.log("After register ", data.photo[0]);
+    const profileImage = data.photo[0];
+    registerUser(data.email, data.password).then((result) => [
+      console.log(result.user),
+    ]);
+    const formData = new FormData();
+    formData.append("image", profileImage);
+    const image_API_URL = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_image_host_key
+    }`;
+    axios
+      .post(image_API_URL, formData)
+      .then((res) => {
+        console.log("After Image Upload", res.data.data.url);
+        const userProfile = {
+          displayName: data.name,
+          photoURL: res.data.data.url,
+        };
+        updateUserProfile(userProfile)
+          .then(() => {
+            console.log("users profile Updated");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -98,11 +121,12 @@ const Register = () => {
             )}
 
             {/* PHOTO URL */}
+
             <input
-              type="text"
+              type="file"
               {...register("photo", { required: true })}
               placeholder="Photo URL"
-              className="border rounded-lg w-full p-3 mb-2 focus:ring-2 focus:ring-purple-500"
+              className="file-input file-input-info border rounded-lg w-full  mb-2 focus:ring-2 focus:ring-purple-500"
             />
             {errors.photo && (
               <p className="text-red-500 mb-2">Photo URL is required</p>

@@ -1,4 +1,5 @@
 import React, { use } from "react";
+import Users from "../../assets/user.png";
 import Logo from "../../components/Logo";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../context/AuthContext/AuthContext";
@@ -19,19 +20,19 @@ const Navbar = () => {
       <li>
         {" "}
         <NavLink to="/">
-          <a>Home</a>
+          <p>Home</p>
         </NavLink>
       </li>
       <li>
         {" "}
         <NavLink to="">
-          <a>All Scholarships</a>
+          <p>All Scholarships</p>
         </NavLink>
       </li>
       <li>
         {" "}
         <NavLink to="">
-          <a>Item 3</a>
+          <p>Item 3</p>
         </NavLink>
       </li>
     </>
@@ -102,7 +103,7 @@ const Navbar = () => {
               className="peer w-10 h-10 rounded-full border border-gray-300 shadow-sm overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-200"
             >
               <img
-                // src={user.photoURL || Users}
+                src={user.photoURL || Users}
                 className="w-full h-full object-cover"
               />
             </button>
