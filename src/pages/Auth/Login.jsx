@@ -1,6 +1,5 @@
-import { FaFacebookF, FaTwitter, FaGoogle } from "react-icons/fa";
 import Logo from "../../components/Logo";
-import { NavLink } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import UseAuth from "../../hooks/UseAuth";
 
@@ -11,12 +10,15 @@ const Login = () => {
     handleSubmit,
   } = useForm();
   const { signInUser } = UseAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleLogin = (data) => {
     console.log("form dta", data);
     signInUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
+        navigate(location?.state || "/");
       })
       .catch((error) => {
         console.log(error);
@@ -29,6 +31,7 @@ const Login = () => {
     signInGoogle()
       .then((result) => {
         console.log(result.user);
+        navigate(location?.state || "/");
       })
       .catch((error) => {
         console.loge(error);
@@ -120,12 +123,13 @@ const Login = () => {
 
           <p className="text-sm mb-6">
             Don’t have an account?{" "}
-            <NavLink
+            <Link
+              state={location.state}
               to="/register"
               className="text-blue-600 font-semibold hover:underline"
             >
               Sign Up Free!
-            </NavLink>
+            </Link>
           </p>
 
           <input

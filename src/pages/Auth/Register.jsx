@@ -1,6 +1,6 @@
 import Logo from "../../components/Logo";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import UseAuth from "../../hooks/UseAuth";
 import axios from "axios";
 
@@ -12,6 +12,8 @@ const Register = () => {
   } = useForm();
 
   const { registerUser, updateUserProfile } = UseAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleRegistration = (data) => {
     console.log("After register ", data.photo[0]);
@@ -35,6 +37,7 @@ const Register = () => {
         updateUserProfile(userProfile)
           .then(() => {
             console.log("users profile Updated");
+            navigate(location?.state || "/");
           })
           .catch((error) => {
             console.log(error);
@@ -88,12 +91,13 @@ const Register = () => {
 
           <p className="text-sm mb-6">
             Already have an account?{" "}
-            <NavLink
+            <Link
+              state={location.state}
               to="/login"
               className="text-blue-600 font-semibold hover:underline"
             >
               Login here
-            </NavLink>
+            </Link>
           </p>
 
           {/* FORM STARTS */}
