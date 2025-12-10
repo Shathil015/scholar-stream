@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import UseAuth from "../hooks/UseAuth";
 import UseAxiosSecure from "../hooks/UseAxiosSecure";
 import Navbar from "../pages/Shared/Navbar";
@@ -20,8 +19,6 @@ const AllScholarShips = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-      <Navbar />
-
       <div className="text-center my-10">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
           All Scholarships
@@ -64,7 +61,7 @@ const AllScholarShips = () => {
 
               {/* Uniform Button */}
               <Link
-                to={`/scholarship/details/${scholarShip._id}`}
+                to={`/all-scholarships/${scholarShip._id}`}
                 className="mt-auto btn w-full bg-blue-600 hover:bg-blue-700 text-white border-none transition-transform hover:scale-[1.02]"
               >
                 View Details
@@ -73,8 +70,6 @@ const AllScholarShips = () => {
           </div>
         ))}
       </div>
-
-      <Footer />
     </div>
   );
 };

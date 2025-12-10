@@ -29,12 +29,17 @@ const Navbar = () => {
           <p>All Scholarships</p>
         </NavLink>
       </li>
-      <li>
-        {" "}
-        <NavLink to="">
-          <p>Item 3</p>
-        </NavLink>
-      </li>
+
+      {user && (
+        <>
+          <li>
+            {" "}
+            <NavLink to="">
+              <p>My-application</p>
+            </NavLink>
+          </li>
+        </>
+      )}
     </>
   );
   return (

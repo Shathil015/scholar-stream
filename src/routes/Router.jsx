@@ -5,6 +5,8 @@ import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import AllScholarShips from "../layouts/AllScholarShips";
+import CardDetails from "../components/CardDetails";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -14,6 +16,18 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: "all-scholarships",
+        Component: AllScholarShips,
+      },
+      {
+        path: "/all-scholarships/:id",
+        element: (
+          <PrivateRoute>
+            <CardDetails></CardDetails>
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -30,9 +44,5 @@ export const router = createBrowserRouter([
         Component: Register,
       },
     ],
-  },
-  {
-    path: "/all-scholarships",
-    Component: AllScholarShips,
   },
 ]);
