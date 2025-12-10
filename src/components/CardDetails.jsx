@@ -8,15 +8,15 @@ const CardDetails = () => {
   const { id } = useParams();
   const axiosSecure = UseAxiosSecure();
 
-  const addModalRef = useRef();
+  // const addModalRef = useRef();
 
-  const handleModalOpen = () => {
-    addModalRef.current.showModal();
-  };
+  // const handleModalOpen = () => {
+  //   addModalRef.current.showModal();
+  // };
 
-  const handleModalClose = () => {
-    addModalRef.current.close();
-  };
+  // const handleModalClose = () => {
+  //   addModalRef.current.close();
+  // };
 
   const { data: cardDetails = [] } = useQuery({
     queryKey: ["scholarship-details", id],
@@ -101,8 +101,15 @@ const CardDetails = () => {
             </div>
           </div>
 
+          <Link
+            to={`/all-scholarships/${id}/applicant-info`}
+            className="w-full sm:w-auto btn btn-primary text-white font-semibold py-3 px-6 rounded-2xl shadow-lg transition-all duration-300"
+          >
+            Apply Now
+          </Link>
+
           {/* Action Button */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-4">
+          {/* <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <button
               onClick={handleModalOpen}
               className="w-full sm:w-auto btn btn-primary text-white font-semibold py-3 px-6 rounded-2xl shadow-lg transition-all duration-300"
@@ -135,7 +142,7 @@ const CardDetails = () => {
                 </div>
               </div>
             </dialog>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

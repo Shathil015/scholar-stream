@@ -10,6 +10,7 @@ import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import DashBoardLayout from "../layouts/DashBoardLayout";
 import MySelection from "../pages/Dashboard/MySelection";
 import ApplicantInfo from "../components/ApplicantInfo";
+import Payment from "../pages/Dashboard/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <CardDetails></CardDetails>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "all-scholarships/:id/applicant-info",
+        element: (
+          <PrivateRoute>
+            <ApplicantInfo />
           </PrivateRoute>
         ),
       },
@@ -62,8 +71,8 @@ export const router = createBrowserRouter([
         Component: MySelection,
       },
       {
-        path: "applicantInfo",
-        Component: ApplicantInfo,
+        path: "payment/:selectId",
+        Component: Payment,
       },
     ],
   },
