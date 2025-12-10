@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import UseAuth from "../hooks/UseAuth";
 import UseAxiosSecure from "../hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 
 const CardDetails = () => {
   const { id } = useParams();

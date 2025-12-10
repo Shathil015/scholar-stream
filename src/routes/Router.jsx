@@ -7,6 +7,9 @@ import Register from "../pages/Auth/Register";
 import AllScholarShips from "../layouts/AllScholarShips";
 import CardDetails from "../components/CardDetails";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import DashBoardLayout from "../layouts/DashBoardLayout";
+import MySelection from "../pages/Dashboard/MySelection";
+import ApplicantInfo from "../components/ApplicantInfo";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +45,25 @@ export const router = createBrowserRouter([
       {
         path: "register",
         Component: Register,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <DashBoardLayout></DashBoardLayout>
+      </PrivateRoute>
+    ),
+
+    children: [
+      {
+        path: "my-selection",
+        Component: MySelection,
+      },
+      {
+        path: "applicantInfo",
+        Component: ApplicantInfo,
       },
     ],
   },
