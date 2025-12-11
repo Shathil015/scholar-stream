@@ -46,21 +46,18 @@ const MySelection = () => {
     });
   };
 
-  //   const handlePayment = async (selection) => {
-  //     const paymentInfo = {
-  //       cost: selection.applicationFees,
-  //       parcelId: selection._id,
-  //       senderEmail: selection.userEmail,
-  //       parcelName: selection.universityName,
-  //     };
-  //     const res = await axiosSecure.post(
-  //       "/payment-checkout-session",
-  //       paymentInfo
-  //     );
+  const handlePayment = async (selection) => {
+    const paymentInfo = {
+      cost: selection.applicationFees,
+      parcelId: selection._id,
+      senderEmail: selection.userEmail,
+      parcelName: selection.universityName,
+    };
+    const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
 
-  //     console.log(res.data.url);
-  //     window.location.assign(res.data.url);
-  //   };
+    console.log(res.data.url);
+    window.location.assign(res.data.url);
+  };
   return (
     <div>
       <h2>All of my parcels : {selection.length}</h2>
@@ -87,18 +84,19 @@ const MySelection = () => {
                   {select.paymentStatus === "paid" ? (
                     <span className="text-green-400 btn">Paid</span>
                   ) : (
-                    <Link
-                      className="btn"
-                      to={`/dashboard/payment/${select._id}`}
-                    >
-                      Pay
-                    </Link>
                     //   <button
                     //     onClick={() => handlePayment(select)}
-                    //     className="btn btn-sm btn-primary text-black"
+                    //     className="btn"
+                    //     to={`/dashboard/payment/${select._id}`}
                     //   >
                     //     Pay
                     //   </button>
+                    <button
+                      onClick={() => handlePayment(select)}
+                      className="btn btn-sm btn-primary text-black"
+                    >
+                      Pay
+                    </button>
                   )}
                 </td>
                 <td>{select.deliveryStatus}</td>
