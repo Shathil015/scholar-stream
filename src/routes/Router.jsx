@@ -11,6 +11,8 @@ import DashBoardLayout from "../layouts/DashBoardLayout";
 import MySelection from "../pages/Dashboard/MySelection";
 import ApplicantInfo from "../components/ApplicantInfo";
 import Payment from "../pages/Dashboard/Payment";
+import PaymentSuccess from "../pages/Dashboard/PaymentSuccess";
+import PaymentCancel from "../pages/Dashboard/PaymentCancel";
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +75,14 @@ export const router = createBrowserRouter([
       {
         path: "payment/:selectId",
         Component: Payment,
+      },
+      {
+        path: "payment-success",
+        Component: PaymentSuccess,
+      },
+      {
+        path: "payment-cancelled",
+        Component: PaymentCancel,
       },
     ],
   },
