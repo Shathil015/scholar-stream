@@ -4,15 +4,16 @@ import Home from "../pages/Home/Home/Home";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
-import AllScholarShips from "../layouts/AllScholarShips";
+
 import CardDetails from "../components/CardDetails";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import DashBoardLayout from "../layouts/DashBoardLayout";
-import MySelection from "../pages/Dashboard/MySelection";
+import MySelection from "../components/MySelection";
 import ApplicantInfo from "../components/ApplicantInfo";
 import Payment from "../pages/Dashboard/Payment";
 import PaymentSuccess from "../pages/Dashboard/PaymentSuccess";
 import PaymentCancel from "../pages/Dashboard/PaymentCancel";
+import AllScholarShips from "../components/AllScholarShips";
 
 export const router = createBrowserRouter([
   {
@@ -29,11 +30,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "/all-scholarships/:id",
-        element: (
-          <PrivateRoute>
-            <CardDetails></CardDetails>
-          </PrivateRoute>
-        ),
+        element: <CardDetails></CardDetails>,
+      },
+      {
+        path: "payment/:selectId",
+        Component: Payment,
+      },
+      {
+        path: "payment-success",
+        Component: PaymentSuccess,
+      },
+      {
+        path: "payment-cancelled",
+        Component: PaymentCancel,
       },
       {
         path: "all-scholarships/:id/applicant-info",
@@ -71,18 +80,6 @@ export const router = createBrowserRouter([
       {
         path: "my-selection",
         Component: MySelection,
-      },
-      {
-        path: "payment/:selectId",
-        Component: Payment,
-      },
-      {
-        path: "payment-success",
-        Component: PaymentSuccess,
-      },
-      {
-        path: "payment-cancelled",
-        Component: PaymentCancel,
       },
     ],
   },
