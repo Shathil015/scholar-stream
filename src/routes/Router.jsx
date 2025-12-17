@@ -10,10 +10,10 @@ import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import DashBoardLayout from "../layouts/DashBoardLayout";
 import MySelection from "../components/MySelection";
 import ApplicantInfo from "../components/ApplicantInfo";
-import Payment from "../pages/Dashboard/Payment";
-import PaymentSuccess from "../pages/Dashboard/PaymentSuccess";
-import PaymentCancel from "../pages/Dashboard/PaymentCancel";
 import AllScholarShips from "../components/AllScholarShips";
+import Payment from "../layouts/Payment";
+import PaymentSuccess from "../layouts/PaymentSuccess";
+import PaymentCancel from "../layouts/PaymentCancel";
 
 export const router = createBrowserRouter([
   {
@@ -33,16 +33,28 @@ export const router = createBrowserRouter([
         element: <CardDetails></CardDetails>,
       },
       {
-        path: "payment/:selectId",
-        Component: Payment,
+        path: "/all-scholarships/payment/:selectId",
+        element: (
+          <PrivateRoute>
+            <Payment />
+          </PrivateRoute>
+        ),
       },
       {
-        path: "payment-success",
-        Component: PaymentSuccess,
+        path: "/all-scholarships/payment-success",
+        element: (
+          <PrivateRoute>
+            <PaymentSuccess />
+          </PrivateRoute>
+        ),
       },
       {
-        path: "payment-cancelled",
-        Component: PaymentCancel,
+        path: "/all-scholarships/payment-cancelled",
+        element: (
+          <PrivateRoute>
+            <PaymentCancel></PaymentCancel>
+          </PrivateRoute>
+        ),
       },
       {
         path: "all-scholarships/:id/applicant-info",

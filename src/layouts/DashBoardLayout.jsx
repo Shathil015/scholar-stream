@@ -1,5 +1,6 @@
 import React from "react";
-import { Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
+import Logo from "../components/Logo";
 
 const DashBoardLayout = () => {
   return (
@@ -29,7 +30,9 @@ const DashBoardLayout = () => {
               <path d="M14 10l2 2l-2 2"></path>
             </svg>
           </label>
-          <div className="px-4">Navbar Title</div>
+          <div className="px-4">
+            <Logo></Logo>
+          </div>
         </nav>
         {/* Page content here */}
 
@@ -50,7 +53,8 @@ const DashBoardLayout = () => {
           <ul className="menu w-full grow">
             {/* List item */}
             <li>
-              <button
+              <Link
+                to="/"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Homepage"
               >
@@ -69,7 +73,12 @@ const DashBoardLayout = () => {
                   <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 </svg>
                 <span className="is-drawer-close:hidden">Homepage</span>
-              </button>
+              </Link>
+            </li>
+            <li>
+              <NavLink to="/dashboard/my-selection" className="justify-between">
+                My Selection
+              </NavLink>
             </li>
 
             {/* List item */}

@@ -13,7 +13,7 @@ const MySelection = () => {
   const { data: selection = [], refetch } = useQuery({
     queryKey: ["my-selection", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/applications?email=${user?.email}`);
+      const res = await axiosSecure.get(`/allScholarship?email=${user?.email}`);
       return res.data;
     },
   });
@@ -46,18 +46,6 @@ const MySelection = () => {
     });
   };
 
-  const handlePayment = async (selection) => {
-    const paymentInfo = {
-      cost: selection.applicationFees,
-      parcelId: selection._id,
-      senderEmail: selection.userEmail,
-      parcelName: selection.universityName,
-    };
-    const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
-
-    console.log(res.data.url);
-    window.location.assign(res.data.url);
-  };
   return (
     <div>
       <h2>All of my parcels : {selection.length}</h2>
@@ -91,12 +79,7 @@ const MySelection = () => {
                     //   >
                     //     Pay
                     //   </button>
-                    <button
-                      onClick={() => handlePayment(select)}
-                      className="btn btn-sm btn-primary text-black"
-                    >
-                      Pay
-                    </button>
+                    <button>Pay</button>
                   )}
                 </td>
                 <td>{select.deliveryStatus}</td>
