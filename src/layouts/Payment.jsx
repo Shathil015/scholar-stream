@@ -6,8 +6,10 @@ import UseAxiosSecure from "../hooks/UseAxiosSecure";
 import { FaGraduationCap } from "react-icons/fa6";
 import { BiBuilding, BiBuildingHouse, BiCreditCard } from "react-icons/bi";
 import { FcGraduationCap } from "react-icons/fc";
+import UseAuth from "../hooks/UseAuth";
 
 const Payment = () => {
+  const { user } = UseAuth();
   const { selectId } = useParams();
   const axiosSecure = UseAxiosSecure();
   const { isLoading, data: selection = [] } = useQuery({
@@ -22,9 +24,11 @@ const Payment = () => {
   const handlePayment = async () => {
     const paymentInfo = {
       cost: selection.applicationFees,
-      parcelId: selection._id,
-      senderEmail: selection.userEmail,
-      parcelName: selection.universityName,
+      scholarshipId: selection._id,
+      userEmail: user?.email,
+      universityName: selection.universityName,
+      universityCountry: selection.universityCountry,
+      scholarshipName: selection.scholarshipName,
     };
 
     const res = await axiosSecure.post(
