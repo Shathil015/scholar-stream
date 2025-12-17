@@ -28,27 +28,6 @@ const CardDetails = () => {
     },
   });
 
-  // const { data: selection = [] } = useQuery({
-  //   queryKey: ["selection-for-payment", user?.email],
-  //   enabled: !!user?.email,
-  //   queryFn: async () => {
-  //     const res = await axiosSecure.get(`/allScholarship?email=${user.email}`);
-  //     return res.data;
-  //   },
-  // });
-
-  // const handlePayment = async (selection) => {
-  //   const paymentInfo = {
-  //     cost: selection.applicationFees,
-  //     parcelId: selection._id,
-  //     senderEmail: selection.userEmail,
-  //     parcelName: selection.universityName,
-  //   };
-  //   const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
-
-  //   console.log(res.data.url);
-  //   window.location.assign(res.data.url);
-  // };
   return (
     <div className="w-11/12 lg:w-9/12 mx-auto my-12">
       <div className="relative flex flex-col lg:flex-row bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300">

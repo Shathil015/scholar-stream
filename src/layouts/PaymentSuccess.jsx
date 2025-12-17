@@ -1,18 +1,33 @@
-import React, { useEffect } from "react";
-import { useSearchParams, Link } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router";
+import UseAxiosSecure from "../hooks/UseAxiosSecure";
 import { FaCheckCircle, FaUniversity } from "react-icons/fa";
 import { BiHomeAlt } from "react-icons/bi";
-import UseAxiosSecure from "../hooks/UseAxiosSecure";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const axiosSecure = UseAxiosSecure();
+  const [payment, setPayment] = useState(null);
+
   useEffect(() => {
-    if (sessionId) {
-      axiosSecure.patch(`/payment-success?session_id=${sessionId}`);
-    }
-  }, [sessionId]);
+    if (!sessionId) return;
+
+    const fetchPayment = async () => {
+      try {
+        // 1️ Mark payment as successful
+        await axiosSecure.patch(`/payment-success?session_id=${sessionId}`);
+
+        // 2️ Get full payment info (transactionId + trackingId)
+        const res = await axiosSecure.get(`/payment-info/${sessionId}`);
+        setPayment(res.data);
+      } catch (err) {
+        console.error("Error fetching payment info:", err);
+      }
+    };
+
+    fetchPayment();
+  }, [sessionId, axiosSecure]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center px-4">
@@ -21,8 +36,23 @@ const PaymentSuccess = () => {
         <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-8 text-white text-center">
           <FaCheckCircle className="w-20 h-20 mx-auto mb-4" />
           <h1 className="text-3xl font-bold">Payment Successful 🎉</h1>
+
           <p className="opacity-90 mt-2">
             Your scholarship application payment has been completed
+          </p>
+
+          <p className="opacity-90 mt-2">
+            Transaction ID:{" "}
+            <span className="font-semibold">
+              {payment?.transactionId || "Loading..."}
+            </span>
+          </p>
+
+          <p className="opacity-90 mt-2">
+            Tracking ID:{" "}
+            <span className="font-semibold">
+              {payment?.trackingId || "Loading..."}
+            </span>
           </p>
         </div>
 
@@ -43,7 +73,9 @@ const PaymentSuccess = () => {
           {/* Session ID */}
           {sessionId && (
             <div className="text-sm text-gray-500">
-              <span className="font-medium text-gray-700">Transaction ID:</span>
+              <span className="font-medium text-gray-700">
+                Stripe Session ID:
+              </span>
               <br />
               <span className="break-all">{sessionId}</span>
             </div>
@@ -69,7 +101,7 @@ const PaymentSuccess = () => {
 
           {/* Trust */}
           <p className="text-xs text-gray-400 pt-2">
-            🔒 Secure payment powered by Stripe
+            Secure payment powered by Stripe
           </p>
         </div>
       </div>

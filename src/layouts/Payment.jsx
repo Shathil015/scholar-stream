@@ -95,18 +95,14 @@ const Payment = () => {
 
             <div className="flex justify-between text-gray-600">
               <span>Service Charge</span>
-              <span>${selection.serviceCharge || 0}</span>
+              <span>$0</span>
             </div>
 
             <hr />
 
             <div className="flex justify-between text-lg font-bold text-gray-900">
               <span>Total Payable</span>
-              <span>
-                $
-                {Number(selection.applicationFees) +
-                  Number(selection.serviceCharge || 0)}
-              </span>
+              <span>${selection.applicationFees}</span>
             </div>
           </div>
 

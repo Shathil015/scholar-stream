@@ -5,9 +5,10 @@ import UseAuth from "../hooks/UseAuth";
 import Swal from "sweetalert2";
 import { FaMagnifyingGlass, FaTrashCan } from "react-icons/fa6";
 import { FiEdit } from "react-icons/fi";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 
 const MySelection = () => {
+  const { id } = useParams();
   const { user } = UseAuth();
   const axiosSecure = UseAxiosSecure();
   const { data: selection = [], refetch } = useQuery({
@@ -17,6 +18,15 @@ const MySelection = () => {
         `/payment-checkout-session?email=${user?.email}`
       );
       return res.data;
+    },
+  });
+
+  const { data: cardDetails = [] } = useQuery({
+    queryKey: ["scholarship-details", id],
+    enabled: !!id,
+    queryFn: async () => {
+      const rest = await axiosSecure.get(`allScholarship/${id}`);
+      return rest.data;
     },
   });
 
@@ -58,8 +68,10 @@ const MySelection = () => {
             <tr>
               <th>Index</th>
               <th>University Name</th>
-              <th>Application Cost</th>
-              <th>Payment</th>
+              <th>University Address</th>
+              <th>Feedback</th>
+              {/* <th>Subject Category</th> */}
+              <th>Application Fees</th>
               <th>Application Status</th>
               <th>Actions</th>
             </tr>
@@ -69,22 +81,24 @@ const MySelection = () => {
               <tr key={select._id}>
                 <th>{index + 1}</th>
                 <td>{select.universityName}</td>
-                <td>{select.applicationFees}</td>
+                <td>{select.universityAddress}</td>
+                <td>{select.feedback}</td>
+                {/* <td>{select.subjectCategory}</td> */}
+                <td>{select.applicationFee}</td>
                 <td>
-                  {select.paymentStatus === "paid" ? (
-                    <span className="text-green-400 btn">Paid</span>
+                  {select.paymentStatus === "unpaid" ? (
+                    <span className="text-green-400 btn">Pay</span>
                   ) : (
-                    //   <button
-                    //     onClick={() => handlePayment(select)}
-                    //     className="btn"
-                    //     to={`/dashboard/payment/${select._id}`}
-                    //   >
-                    //     Pay
-                    //   </button>
-                    <button>Pay</button>
+                    <button
+                      // onClick={() => handlePayment(select)}
+                      className="btn"
+                      to={`/all-scholarships/payment/${cardDetails._id}`}
+                    >
+                      Paid
+                    </button>
                   )}
                 </td>
-                <td>{select.deliveryStatus}</td>
+                {/* <td>{select.deliveryStatus}</td> */}
                 <td>
                   <button className="btn btn-square hover:bg-primary">
                     <FaMagnifyingGlass />
