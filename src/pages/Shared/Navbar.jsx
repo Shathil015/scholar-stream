@@ -34,7 +34,7 @@ const Navbar = () => {
         <>
           <li>
             {" "}
-            <NavLink to="">
+            <NavLink to="/dashboard/my-selection">
               <p>My-application</p>
             </NavLink>
           </li>

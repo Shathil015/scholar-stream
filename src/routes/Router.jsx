@@ -18,6 +18,7 @@ import PaymentHistory from "../pages/PaymentHistory/PaymentHistory";
 import Moderator from "../pages/Moderator/Modaretor";
 import ApprovedModerator from "../pages/Dashboard/ApprovedModerator";
 import UsersManagement from "../pages/Dashboard/UsersManagement";
+import AdminRoute from "./PrivateRoute/AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -107,11 +108,20 @@ export const router = createBrowserRouter([
       },
       {
         path: "approved-moderator",
-        Component: ApprovedModerator,
+        element: (
+          <AdminRoute>
+            <ApprovedModerator />
+          </AdminRoute>
+        ),
       },
       {
         path: "users-management",
-        Component: UsersManagement,
+
+        element: (
+          <AdminRoute>
+            <UsersManagement />
+          </AdminRoute>
+        ),
       },
     ],
   },

@@ -4,8 +4,10 @@ import Logo from "../components/Logo";
 import { AiFillDatabase } from "react-icons/ai";
 import { MdOutlineAddModerator, MdOutlineHistory } from "react-icons/md";
 import { FaUsers } from "react-icons/fa6";
+import useRole from "../hooks/useRole";
 
 const DashBoardLayout = () => {
+  const { role } = useRole();
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -93,24 +95,30 @@ const DashBoardLayout = () => {
               </NavLink>
             </li>
 
-            <li>
-              <NavLink
-                to="/dashboard/approved-moderator"
-                className="justify-between"
-              >
-                <MdOutlineAddModerator />
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Users Management"
-                to="/dashboard/users-management"
-              >
-                <FaUsers></FaUsers>
-                <span className="is-drawer-close:hidden">Users Management</span>
-              </NavLink>
-            </li>
+            {role === "admin" && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/approved-moderator"
+                    className="justify-between"
+                  >
+                    <MdOutlineAddModerator />
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Users Management"
+                    to="/dashboard/users-management"
+                  >
+                    <FaUsers></FaUsers>
+                    <span className="is-drawer-close:hidden">
+                      Users Management
+                    </span>
+                  </NavLink>
+                </li>
+              </>
+            )}
 
             {/* List item */}
             <li>

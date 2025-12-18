@@ -16,7 +16,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = (data) => {
-    console.log("form dta", data);
     signInUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
