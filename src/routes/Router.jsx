@@ -14,6 +14,7 @@ import AllScholarShips from "../components/AllScholarShips";
 import Payment from "../layouts/Payment";
 import PaymentSuccess from "../layouts/PaymentSuccess";
 import PaymentCancel from "../layouts/PaymentCancel";
+import PaymentHistory from "../pages/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -92,6 +93,10 @@ export const router = createBrowserRouter([
       {
         path: "my-selection",
         Component: MySelection,
+      },
+      {
+        path: "payment-history",
+        Component: PaymentHistory,
       },
     ],
   },

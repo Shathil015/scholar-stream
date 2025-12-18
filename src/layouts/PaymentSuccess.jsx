@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router";
 import UseAxiosSecure from "../hooks/UseAxiosSecure";
 import { FaCheckCircle, FaUniversity } from "react-icons/fa";
@@ -8,25 +8,9 @@ const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const axiosSecure = UseAxiosSecure();
-  const [payment, setPayment] = useState(null);
 
   useEffect(() => {
     if (!sessionId) return;
-
-    const fetchPayment = async () => {
-      try {
-        // 1️ Mark payment as successful
-        await axiosSecure.patch(`/payment-success?session_id=${sessionId}`);
-
-        // 2️ Get full payment info (transactionId + trackingId)
-        const res = await axiosSecure.get(`/payment-info/${sessionId}`);
-        setPayment(res.data);
-      } catch (err) {
-        console.error("Error fetching payment info:", err);
-      }
-    };
-
-    fetchPayment();
   }, [sessionId, axiosSecure]);
 
   return (
@@ -39,20 +23,6 @@ const PaymentSuccess = () => {
 
           <p className="opacity-90 mt-2">
             Your scholarship application payment has been completed
-          </p>
-
-          <p className="opacity-90 mt-2">
-            Transaction ID:{" "}
-            <span className="font-semibold">
-              {payment?.transactionId || "Loading..."}
-            </span>
-          </p>
-
-          <p className="opacity-90 mt-2">
-            Tracking ID:{" "}
-            <span className="font-semibold">
-              {payment?.trackingId || "Loading..."}
-            </span>
           </p>
         </div>
 

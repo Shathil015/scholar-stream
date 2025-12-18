@@ -16,11 +16,8 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleRegistration = (data) => {
-    console.log("After register ", data.photo[0]);
     const profileImage = data.photo[0];
-    registerUser(data.email, data.password).then((result) => [
-      console.log(result.user),
-    ]);
+    registerUser(data.email, data.password).then(() => []);
     const formData = new FormData();
     formData.append("image", profileImage);
     const image_API_URL = `https://api.imgbb.com/1/upload?key=${
@@ -29,10 +26,11 @@ const Register = () => {
     axios
       .post(image_API_URL, formData)
       .then((res) => {
-        console.log("After Image Upload", res.data.data.url);
+        const photoURL = res.data.data.url;
+
         const userProfile = {
           displayName: data.name,
-          photoURL: res.data.data.url,
+          photoURL: photoURL,
         };
         updateUserProfile(userProfile)
           .then(() => {

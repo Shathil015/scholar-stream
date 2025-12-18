@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import Logo from "../components/Logo";
+import { AiFillDatabase } from "react-icons/ai";
+import { MdOutlineHistory } from "react-icons/md";
 
 const DashBoardLayout = () => {
   return (
@@ -77,7 +79,16 @@ const DashBoardLayout = () => {
             </li>
             <li>
               <NavLink to="/dashboard/my-selection" className="justify-between">
-                My Selection
+                <AiFillDatabase />
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to="/dashboard/payment-history"
+                className="justify-between"
+              >
+                <MdOutlineHistory />
               </NavLink>
             </li>
 
