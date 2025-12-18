@@ -15,6 +15,8 @@ import Payment from "../layouts/Payment";
 import PaymentSuccess from "../layouts/PaymentSuccess";
 import PaymentCancel from "../layouts/PaymentCancel";
 import PaymentHistory from "../pages/PaymentHistory/PaymentHistory";
+import Moderator from "../pages/Moderator/Modaretor";
+import ApprovedModerator from "../pages/Dashboard/ApprovedModerator";
 
 export const router = createBrowserRouter([
   {
@@ -97,6 +99,10 @@ export const router = createBrowserRouter([
       {
         path: "payment-history",
         Component: PaymentHistory,
+      },
+      {
+        path: "approved-moderator",
+        Component: ApprovedModerator,
       },
     ],
   },

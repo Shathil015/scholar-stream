@@ -2,6 +2,7 @@ import Logo from "../../components/Logo";
 import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import UseAuth from "../../hooks/UseAuth";
+import UseAxiosSecure from "../../hooks/UseAxiosSecure";
 
 const Login = () => {
   const {
@@ -11,6 +12,7 @@ const Login = () => {
   } = useForm();
   const { signInUser } = UseAuth();
   const location = useLocation();
+  const axiosSecure = UseAxiosSecure();
   const navigate = useNavigate();
 
   const handleLogin = (data) => {
@@ -32,6 +34,15 @@ const Login = () => {
       .then((result) => {
         console.log(result.user);
         navigate(location?.state || "/");
+        const userInfo = {
+          email: result.user.email,
+          displayName: result.user.displayName,
+          photoURL: result.user.photoURL,
+        };
+        axiosSecure.post("/users", userInfo).then((res) => {
+          console.log(res.data);
+          navigate(location?.state || "/");
+        });
       })
       .catch((error) => {
         console.loge(error);

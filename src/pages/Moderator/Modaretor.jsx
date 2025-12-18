@@ -5,7 +5,7 @@ import UseAuth from "../../hooks/UseAuth";
 import axios from "axios";
 import UseAxiosSecure from "../../hooks/UseAxiosSecure";
 
-const Register = () => {
+const Moderator = () => {
   const {
     register,
     formState: { errors },
@@ -35,7 +35,7 @@ const Register = () => {
           displayName: data.name,
           photoURL: photoURL,
         };
-        axiosSecure.post("/users", userInfo).then((res) => {
+        axiosSecure.post("/moderators", userInfo).then((res) => {
           if (res.data.insertedId) {
             console.log("user info saved");
           }
@@ -73,7 +73,7 @@ const Register = () => {
           photoURL: result.user.photoURL,
         };
 
-        axiosSecure.post("/users", userInfo).then((res) => {
+        axiosSecure.post("/moderators", userInfo).then((res) => {
           console.log(res.data);
           navigate(location?.state || "/");
         });
@@ -110,7 +110,9 @@ const Register = () => {
 
         {/* RIGHT SIDE FORM */}
         <div className="p-10 flex flex-col justify-center">
-          <h2 className="text-2xl font-bold mb-2">Create an account</h2>
+          <h2 className="text-2xl font-bold mb-2">
+            Create an account to be moderator
+          </h2>
 
           <p className="text-sm mb-6">
             Already have an account?{" "}
@@ -200,4 +202,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Moderator;

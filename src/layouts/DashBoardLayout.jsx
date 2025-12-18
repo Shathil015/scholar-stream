@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import Logo from "../components/Logo";
 import { AiFillDatabase } from "react-icons/ai";
-import { MdOutlineHistory } from "react-icons/md";
+import { MdOutlineAddModerator, MdOutlineHistory } from "react-icons/md";
 
 const DashBoardLayout = () => {
   return (
@@ -89,6 +89,15 @@ const DashBoardLayout = () => {
                 className="justify-between"
               >
                 <MdOutlineHistory />
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to="/dashboard/approved-moderator"
+                className="justify-between"
+              >
+                <MdOutlineAddModerator />
               </NavLink>
             </li>
 
