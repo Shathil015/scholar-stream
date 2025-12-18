@@ -3,10 +3,11 @@ import React from "react";
 import UseAxiosSecure from "../../hooks/UseAxiosSecure";
 import { FaUserCheck } from "react-icons/fa6";
 import { IoPersonRemoveSharp } from "react-icons/io5";
+import Swal from "sweetalert2";
 
 const ApprovedModerator = () => {
   const axiosSecure = UseAxiosSecure();
-  const { data: approvedModerators = [] } = useQuery({
+  const { data: approvedModerators = [], refetch } = useQuery({
     queryKey: ["approved-moderators", "pending"],
     queryFn: async () => {
       const res = await axiosSecure.get("/moderators");
@@ -14,9 +15,51 @@ const ApprovedModerator = () => {
     },
   });
 
-  const handleApproval = (id) => {
-    // Handle approval logic here
-    console.log("Approved moderator with ID:", id);
+  const updateModeratorStatus = (moderator, status) => {
+    const updateInfo = { status: status, email: moderator.email };
+    axiosSecure
+      .patch(`/moderators/${moderator._id}`, updateInfo)
+      .then((res) => {
+        if (res.data.modifiedCount) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `Moderator status is set to ${status}.`,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          refetch();
+        }
+      });
+  };
+
+  const handleDeleteModerator = (moderator) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This moderator will be permanently deleted!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await axiosSecure.delete(`/moderators/${moderator._id}`);
+
+        if (res.data.deletedCount > 0) {
+          Swal.fire("Deleted!", "Moderator has been removed.", "success");
+          refetch();
+        }
+      }
+    });
+  };
+
+  const handleApproval = (moderator) => {
+    updateModeratorStatus(moderator, "approved");
+  };
+
+  const handleRejection = (moderator) => {
+    updateModeratorStatus(moderator, "rejected");
   };
 
   return (
@@ -36,20 +79,39 @@ const ApprovedModerator = () => {
               </tr>
             </thead>
             <tbody>
-              {approvedModerators.map((payment, index) => (
-                <tr key={payment._id}>
+              {approvedModerators.map((modify, index) => (
+                <tr key={modify._id}>
                   <th>{index + 1}</th>
-                  <td>{payment.displayName}</td>
-                  <td>{payment.createdAt}</td>
-                  <td>{payment.status}</td>
+                  <td>{modify.displayName}</td>
+                  <td>{modify.createdAt}</td>
+                  <td>
+                    <p
+                      className={
+                        modify.status === "approved"
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }
+                    >
+                      {modify.status}
+                    </p>
+                  </td>
                   <td className="flex gap-2">
                     <button
-                      onClick={() => handleApproval(payment._id)}
+                      onClick={() => handleApproval(modify)}
                       className="btn btn-success btn-sm"
                     >
                       <FaUserCheck />
                     </button>
-                    <button className="btn btn-success btn-sm">
+                    <button
+                      onClick={() => handleRejection(modify)}
+                      className="btn btn-error btn-sm"
+                    >
+                      <IoPersonRemoveSharp />
+                    </button>
+                    <button
+                      onClick={() => handleDeleteModerator(modify)}
+                      className="btn btn-error btn-sm"
+                    >
                       <IoPersonRemoveSharp />
                     </button>
                   </td>
