@@ -19,6 +19,7 @@ import Moderator from "../pages/Moderator/Modaretor";
 import ApprovedModerator from "../pages/Dashboard/ApprovedModerator";
 import UsersManagement from "../pages/Dashboard/UsersManagement";
 import AdminRoute from "./PrivateRoute/AdminRoute";
+import AssignModerator from "../pages/Dashboard/AssignModerator";
 
 export const router = createBrowserRouter([
   {
@@ -108,6 +109,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "approved-moderator",
+        // Component: ApprovedModerator,
         element: (
           <AdminRoute>
             <ApprovedModerator />
@@ -115,8 +117,17 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "assign-moderator",
+        // Component: ApprovedModerator,
+        element: (
+          <AdminRoute>
+            <AssignModerator />
+          </AdminRoute>
+        ),
+      },
+      {
         path: "users-management",
-
+        // Component: UsersManagement,
         element: (
           <AdminRoute>
             <UsersManagement />

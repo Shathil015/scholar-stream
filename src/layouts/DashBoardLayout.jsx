@@ -2,7 +2,11 @@ import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import Logo from "../components/Logo";
 import { AiFillDatabase } from "react-icons/ai";
-import { MdOutlineAddModerator, MdOutlineHistory } from "react-icons/md";
+import {
+  MdAddModerator,
+  MdOutlineAddModerator,
+  MdOutlineHistory,
+} from "react-icons/md";
 import { FaUsers } from "react-icons/fa6";
 import useRole from "../hooks/useRole";
 
@@ -81,17 +85,24 @@ const DashBoardLayout = () => {
               </Link>
             </li>
             <li>
-              <NavLink to="/dashboard/my-selection" className="justify-between">
+              <NavLink
+                to="/dashboard/my-selection"
+                className="justify-between is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="My Selection"
+              >
                 <AiFillDatabase />
+                <span className="is-drawer-close:hidden">My Selection</span>
               </NavLink>
             </li>
 
             <li>
               <NavLink
                 to="/dashboard/payment-history"
-                className="justify-between"
+                className="justify-between is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Payment History"
               >
                 <MdOutlineHistory />
+                <span className="is-drawer-close:hidden">Payment History</span>
               </NavLink>
             </li>
 
@@ -100,9 +111,25 @@ const DashBoardLayout = () => {
                 <li>
                   <NavLink
                     to="/dashboard/approved-moderator"
-                    className="justify-between"
+                    className="justify-between is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Approved Moderator"
                   >
                     <MdOutlineAddModerator />
+                    <span className="is-drawer-close:hidden">
+                      Approved Moderator
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/assign-moderator"
+                    className="justify-between is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Assign Moderator"
+                  >
+                    <MdAddModerator />
+                    <span className="is-drawer-close:hidden">
+                      Assign Moderator
+                    </span>
                   </NavLink>
                 </li>
                 <li>

@@ -13,10 +13,9 @@ const MySelection = () => {
   const axiosSecure = UseAxiosSecure();
   const { data: selection = [], refetch } = useQuery({
     queryKey: ["my-selection", user?.email],
+    enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/payment-checkout-session?email=${user?.email}`
-      );
+      const res = await axiosSecure.get(`/payment?email=${user.email}`);
       return res.data;
     },
   });
@@ -25,7 +24,7 @@ const MySelection = () => {
     queryKey: ["scholarship-details", id],
     enabled: !!id,
     queryFn: async () => {
-      const rest = await axiosSecure.get(`allScholarship/${id}`);
+      const rest = await axiosSecure.get(`/payment/:id`);
       return rest.data;
     },
   });
@@ -40,7 +39,7 @@ const MySelection = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .delete(`/payment-selection/${id}`)
+          .delete(`/payment/${id}`)
           .then((res) => {
             if (res.data.deletedCount > 0) {
               refetch();
@@ -60,7 +59,7 @@ const MySelection = () => {
 
   return (
     <div>
-      <h2>All of my parcels : {selection.length}</h2>
+      <h2>All of my Applications : {selection.length}</h2>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           {/* head */}
@@ -68,11 +67,10 @@ const MySelection = () => {
             <tr>
               <th>Index</th>
               <th>University Name</th>
-              <th>University Address</th>
-              <th>Feedback</th>
-              {/* <th>Subject Category</th> */}
+
+              <th>Approval Status</th>
               <th>Application Fees</th>
-              <th>Application Status</th>
+              <th>Payment Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -81,10 +79,9 @@ const MySelection = () => {
               <tr key={select._id}>
                 <th>{index + 1}</th>
                 <td>{select.universityName}</td>
-                <td>{select.universityAddress}</td>
-                <td>{select.feedback}</td>
-                {/* <td>{select.subjectCategory}</td> */}
-                <td>{select.applicationFee}</td>
+
+                <td>{select.approvedStatus}</td>
+                <td>{select.amount}</td>
                 <td>
                   {select.paymentStatus === "unpaid" ? (
                     <span className="text-green-400 btn">Pay</span>

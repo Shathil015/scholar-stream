@@ -1,26 +1,27 @@
-import React from "react";
+import { Navigate, useLocation } from "react-router";
 import UseAuth from "../../hooks/UseAuth";
-import UseAxiosSecure from "../../hooks/UseAxiosSecure";
-
 import useRole from "../../hooks/useRole";
 import Loader from "../../components/Loader";
 import Forbidden from "../../components/Forbidden";
 
-const AdminRoute = () => {
+const AdminRoute = ({ children }) => {
   const { user, loading } = UseAuth();
-
+  const location = useLocation();
   const { roleLoading, role } = useRole();
 
   if (loading || roleLoading) {
-    return <Loader></Loader>;
+    return <Loader />;
   }
-  if (role !== "admin") {
-    return <Forbidden></Forbidden>;
-  }
+
   if (!user) {
-    return <Navigate state={location.pathname} to="/login"></Navigate>;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
-  return <div></div>;
+
+  if (role !== "admin") {
+    return <Forbidden />;
+  }
+
+  return children;
 };
 
 export default AdminRoute;

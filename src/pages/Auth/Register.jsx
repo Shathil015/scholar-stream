@@ -47,7 +47,7 @@ const Register = () => {
         };
         updateUserProfile(userProfile)
           .then(() => {
-            console.log("users profile Updated");
+            // console.log("users profile Updated");
             navigate(location?.state || "/");
           })
           .catch((error) => {
