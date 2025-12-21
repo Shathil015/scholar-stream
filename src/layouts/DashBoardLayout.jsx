@@ -7,7 +7,7 @@ import {
   MdOutlineAddModerator,
   MdOutlineHistory,
 } from "react-icons/md";
-import { FaUsers } from "react-icons/fa6";
+import { FaGoogleScholar, FaUsers } from "react-icons/fa6";
 import useRole from "../hooks/useRole";
 
 const DashBoardLayout = () => {
@@ -141,6 +141,18 @@ const DashBoardLayout = () => {
                     <FaUsers></FaUsers>
                     <span className="is-drawer-close:hidden">
                       Users Management
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Add Scholarship"
+                    to="/dashboard/add-scholarship"
+                  >
+                    <FaGoogleScholar />
+                    <span className="is-drawer-close:hidden">
+                      Add Scholarship
                     </span>
                   </NavLink>
                 </li>

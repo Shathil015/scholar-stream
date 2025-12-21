@@ -5,19 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router";
 
 const CardDetails = () => {
-  // const { user } = UseAuth();
   const { id } = useParams();
   const axiosSecure = UseAxiosSecure();
-
-  // const addModalRef = useRef();
-
-  // const handleModalOpen = () => {
-  //   addModalRef.current.showModal();
-  // };
-
-  // const handleModalClose = () => {
-  //   addModalRef.current.close();
-  // };
+  const { user } = UseAuth();
 
   const { data: cardDetails = [] } = useQuery({
     queryKey: ["scholarship-details", id],
@@ -113,6 +103,37 @@ const CardDetails = () => {
             </Link>
           )}
         </div>
+      </div>
+      <div className="mt-10">
+        <h3 className="text-2xl font-bold mb-4">Student Reviews</h3>
+        {cardDetails.reviews?.length > 0 ? (
+          <div className="space-y-4">
+            {cardDetails.reviews.map((review, idx) => (
+              <div
+                key={idx}
+                className="flex gap-4 bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition"
+              >
+                <img
+                  src={review.userPhoto || user}
+                  alt={review.userName}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <div>
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-semibold">{review.userName}</h4>
+                    <span className="text-sm text-gray-500">
+                      {new Date(review.date).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <p className="text-yellow-500">{"★".repeat(review.rating)}</p>
+                  <p className="text-gray-700 mt-1">{review.comment}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500">No reviews yet.</p>
+        )}
       </div>
     </div>
   );

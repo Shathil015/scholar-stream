@@ -20,6 +20,7 @@ import ApprovedModerator from "../pages/Dashboard/ApprovedModerator";
 import UsersManagement from "../pages/Dashboard/UsersManagement";
 import AdminRoute from "./PrivateRoute/AdminRoute";
 import AssignModerator from "../pages/Dashboard/AssignModerator";
+import AddScholarship from "../pages/Dashboard/AddScholarship";
 
 export const router = createBrowserRouter([
   {
@@ -131,6 +132,15 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <UsersManagement />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "add-scholarship",
+        // Component: UsersManagement,
+        element: (
+          <AdminRoute>
+            <AddScholarship />
           </AdminRoute>
         ),
       },

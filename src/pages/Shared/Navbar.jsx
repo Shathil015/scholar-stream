@@ -3,9 +3,11 @@ import { Link, NavLink } from "react-router";
 import Users from "../../assets/user.png";
 import Logo from "../../components/Logo";
 import { AuthContext } from "../../context/AuthContext/AuthContext";
+import useRole from "../../hooks/useRole";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const { role } = useRole();
 
   const handleLogOut = () => {
     logOut()
@@ -16,9 +18,20 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "All Scholarships", path: "/all-scholarships" },
-    { name: "Users Management", path: "/dashboard/users-management" },
+
     ...(user
       ? [{ name: "My Applications", path: "/dashboard/my-selection" }]
+      : []),
+    ...(role === "admin"
+      ? [{ name: "Users Management", path: "/dashboard/users-management" }]
+      : []),
+    ...(role === "moderator"
+      ? [
+          {
+            name: "Moderator Dashboard",
+            path: "/dashboard/moderator-dashboard",
+          },
+        ]
       : []),
   ];
 
