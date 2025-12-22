@@ -1,25 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
 import UseAxiosSecure from "../../../hooks/UseAxiosSecure";
-import { Link } from "react-router";
-import { FaDollarSign, FaUniversity } from "react-icons/fa";
 
 const TopScholarships = () => {
-  const axiosSecure = UseAxiosSecure();
+  const axiosPublic = UseAxiosSecure();
 
-  const { data: scholarships = [], isLoading } = useQuery({
+  const {
+    data: scholarships = [],
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["top-scholarships"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/top-scholarships");
+      const res = await axiosPublic.get("/top-scholarships/home");
       return res.data;
     },
   });
 
   if (isLoading) {
-    return (
-      <div className="text-center py-20 text-gray-500">
-        Loading top scholarships...
-      </div>
-    );
+    return <div className="text-center py-20">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-20 text-red-500">Failed to load</div>;
   }
 
   return (
@@ -68,7 +70,7 @@ const TopScholarships = () => {
 
               <Link
                 to={`/all-scholarships/${item._id}`}
-                className="inline-block w-full text-center mt-4 btn btn-sm bg-gradient-to-r from-indigo-500 to-purple-500 text-white border-none hover:opacity-90"
+                className="inline-block w-full text-center mt-4 btn btn-sm bg-gradient-to-r from-purple-600 to-indigo-600 text-white border-none hover:opacity-90"
               >
                 View Details
               </Link>

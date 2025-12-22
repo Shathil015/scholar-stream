@@ -19,7 +19,7 @@ const Navbar = () => {
     { name: "Home", path: "/" },
     { name: "All Scholarships", path: "/all-scholarships" },
 
-    ...(user
+    ...(role === "user"
       ? [{ name: "My Applications", path: "/dashboard/my-selection" }]
       : []),
     ...(role === "admin"

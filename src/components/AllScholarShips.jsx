@@ -119,7 +119,7 @@ const AllScholarShips = () => {
               {/* Button */}
               <Link
                 to={`/all-scholarships/${scholarShip._id}`}
-                className="mt-auto w-full py-2 text-center text-white font-medium rounded-xl bg-blue-600 hover:bg-blue-700 transition-transform duration-300 hover:scale-[1.02]"
+                className="mt-auto w-full py-2 text-center text-white font-medium rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 transition-transform duration-300 hover:scale-[1.02]"
               >
                 View Details
               </Link>

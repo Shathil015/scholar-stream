@@ -18,6 +18,15 @@ const CardDetails = () => {
     },
   });
 
+  const { data: reviews = [], isLoading: reviewsLoading } = useQuery({
+    queryKey: ["reviews", id],
+    enabled: !!id,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/reviews?scholarshipId=${id}`);
+      return res.data;
+    },
+  });
+
   return (
     <div className="w-11/12 lg:w-9/12 mx-auto my-12">
       <div className="relative flex flex-col lg:flex-row bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
@@ -97,7 +106,7 @@ const CardDetails = () => {
           ) : (
             <Link
               to={`/all-scholarships/payment/${cardDetails._id}`}
-              className="btn btn-secondary"
+              className="btn  bg-gradient-to-r from-purple-600 to-indigo-600"
             >
               Apply Now
             </Link>
@@ -119,6 +128,40 @@ const CardDetails = () => {
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div>
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-semibold">{review.userName}</h4>
+                    <span className="text-sm text-gray-500">
+                      {new Date(review.date).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <p className="text-yellow-500">{"★".repeat(review.rating)}</p>
+                  <p className="text-gray-700 mt-1">{review.comment}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500">No reviews yet.</p>
+        )}
+      </div>
+      <div className="mt-10">
+        <h3 className="text-2xl font-bold mb-4">Student Reviews</h3>
+
+        {reviewsLoading ? (
+          <p className="text-gray-500">Loading reviews...</p>
+        ) : reviews.length > 0 ? (
+          <div className="space-y-4">
+            {reviews.map((review, idx) => (
+              <div
+                key={idx}
+                className="flex gap-4 bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition"
+              >
+                <img
+                  src={review.userPhoto}
+                  alt={review.userName}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <div className="flex-1">
                   <div className="flex justify-between items-center">
                     <h4 className="font-semibold">{review.userName}</h4>
                     <span className="text-sm text-gray-500">

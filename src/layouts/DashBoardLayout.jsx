@@ -1,191 +1,169 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import Logo from "../components/Logo";
-import { AiFillDatabase } from "react-icons/ai";
 import {
   MdAddModerator,
   MdOutlineAddModerator,
   MdOutlineHistory,
 } from "react-icons/md";
-import { FaGoogleScholar, FaUsers } from "react-icons/fa6";
+import { AiFillDatabase } from "react-icons/ai";
+import {
+  FaEnvelope,
+  FaGoogleScholar,
+  FaUsers,
+  FaUserShield,
+} from "react-icons/fa6";
 import useRole from "../hooks/useRole";
+import UseAuth from "../hooks/UseAuth";
+import { FaHome } from "react-icons/fa";
 
 const DashBoardLayout = () => {
   const { role } = useRole();
+  const { user } = UseAuth();
+
+  const navStyle = ({ isActive }) =>
+    `flex items-center gap-3 px-4 py-2 rounded-lg transition-all
+     ${
+       isActive
+         ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md"
+         : "text-gray-300 hover:bg-white/10 hover:text-white"
+     }`;
+
   return (
     <div className="drawer lg:drawer-open">
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
-        {/* Navbar */}
-        <nav className="navbar w-full bg-base-300">
-          <label
-            htmlFor="my-drawer-4"
-            aria-label="open sidebar"
-            className="btn btn-square btn-ghost"
-          >
-            {/* Sidebar toggle icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth="2"
-              fill="none"
-              stroke="currentColor"
-              className="my-1.5 inline-block size-4"
-            >
-              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-              <path d="M9 4v16"></path>
-              <path d="M14 10l2 2l-2 2"></path>
-            </svg>
-          </label>
-          <div className="px-4">
-            <Logo></Logo>
-          </div>
-        </nav>
-        {/* Page content here */}
+      <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
 
-        <div className="p-4">
-          {" "}
-          <Outlet></Outlet>
-        </div>
+      {/* MAIN CONTENT */}
+      <div className="drawer-content flex flex-col min-h-screen">
+        {/* Top Navbar */}
+        <header className="sticky top-0 z-40 bg-white border-b shadow-sm">
+          <div className="flex items-center justify-between px-4 py-3">
+            <label
+              htmlFor="dashboard-drawer"
+              className="btn btn-square btn-ghost lg:hidden"
+            >
+              ☰
+            </label>
+            <Logo />
+            <span className="text-sm text-gray-500">Dashboard Panel</span>
+          </div>
+        </header>
+
+        {/* Page Content */}
+        <main className="flex-1 bg-gray-50 p-4 md:p-6">
+          <Outlet />
+        </main>
       </div>
 
-      <div className="drawer-side is-drawer-close:overflow-visible">
-        <label
-          htmlFor="my-drawer-4"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
-        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-          {/* Sidebar content here */}
-          <ul className="menu w-full grow">
-            {/* List item */}
+      {/* SIDEBAR */}
+      <div className="drawer-side">
+        <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
+
+        <aside className="w-72 h-full bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+          <div className="p-5 border-b border-white/10">
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-3 flex items-center gap-2">
+                  <img
+                    src={user?.photoURL || "https://i.ibb.co/2kRkKzJ/user.png"}
+                    alt="User"
+                    className="w-15 h-15 rounded-full border-4 border-white object-cover"
+                  />
+                  <div className="text-white">
+                    <h2 className="text-1xl font-bold">
+                      {user?.displayName || "User"}
+                    </h2>
+                    <p className="text-sm opacity-90">{user?.email}</p>
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="border-t px-6 py-4 flex justify-end">
+                  <button className="btn btn-outline btn-primary">
+                    Edit Profile (Coming Soon)
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul className="menu px-3 py-4 space-y-1">
+            {/* USER SECTION */}
+            <li className="menu-title text-xs text-gray-400 px-3">USER</li>
+
             <li>
-              <Link
-                to="/"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Homepage"
-              >
-                {/* Home icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
-                <span className="is-drawer-close:hidden">Homepage</span>
-              </Link>
+              <NavLink to="/" className={navStyle}>
+                <FaHome />
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink
-                to="/dashboard/my-selection"
-                className="justify-between is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Selection"
-              >
+              <NavLink to="/dashboard/my-selection" className={navStyle}>
                 <AiFillDatabase />
-                <span className="is-drawer-close:hidden">My Selection</span>
+                My Selection
               </NavLink>
             </li>
 
             <li>
-              <NavLink
-                to="/dashboard/payment-history"
-                className="justify-between is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Payment History"
-              >
+              <NavLink to="/dashboard/payment-history" className={navStyle}>
                 <MdOutlineHistory />
-                <span className="is-drawer-close:hidden">Payment History</span>
+                Payment History
               </NavLink>
             </li>
 
+            {/* ADMIN SECTION */}
             {role === "admin" && (
               <>
+                <li className="menu-title text-xs text-gray-400 px-3 mt-4">
+                  ADMIN
+                </li>
+
                 <li>
                   <NavLink
                     to="/dashboard/approved-moderator"
-                    className="justify-between is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Approved Moderator"
+                    className={navStyle}
                   >
                     <MdOutlineAddModerator />
-                    <span className="is-drawer-close:hidden">
-                      Approved Moderator
-                    </span>
+                    Approved Moderators
                   </NavLink>
                 </li>
+
                 <li>
                   <NavLink
                     to="/dashboard/assign-moderator"
-                    className="justify-between is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Assign Moderator"
+                    className={navStyle}
                   >
                     <MdAddModerator />
-                    <span className="is-drawer-close:hidden">
-                      Assign Moderator
-                    </span>
+                    Assign Moderator
                   </NavLink>
                 </li>
+
                 <li>
                   <NavLink
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Users Management"
                     to="/dashboard/users-management"
+                    className={navStyle}
                   >
-                    <FaUsers></FaUsers>
-                    <span className="is-drawer-close:hidden">
-                      Users Management
-                    </span>
+                    <FaUsers />
+                    Users Management
                   </NavLink>
                 </li>
+
                 <li>
-                  <NavLink
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Add Scholarship"
-                    to="/dashboard/add-scholarship"
-                  >
+                  <NavLink to="/dashboard/add-scholarship" className={navStyle}>
                     <FaGoogleScholar />
-                    <span className="is-drawer-close:hidden">
-                      Add Scholarship
-                    </span>
+                    Add Scholarship
                   </NavLink>
                 </li>
               </>
             )}
 
-            {/* List item */}
-            <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Settings"
-              >
-                {/* Settings icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M20 7h-9"></path>
-                  <path d="M14 17H5"></path>
-                  <circle cx="17" cy="17" r="3"></circle>
-                  <circle cx="7" cy="7" r="3"></circle>
-                </svg>
-                <span className="is-drawer-close:hidden">Settings</span>
-              </button>
-            </li>
+            {/* FOOTER */}
+            <div className="mt-8 px-4 text-xs text-gray-500">
+              © ScholarStream
+            </div>
           </ul>
-        </div>
+        </aside>
       </div>
     </div>
   );

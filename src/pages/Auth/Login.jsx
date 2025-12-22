@@ -31,7 +31,7 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     signInGoogle()
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         navigate(location?.state || "/");
         const userInfo = {
           email: result.user.email,

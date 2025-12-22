@@ -1,16 +1,122 @@
-scholar-stream-client
+Scholar Stream
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live Site: https://scholar-stream-54f8e.web.app
+Server: Node.js + Express + MongoDB
+Auth & Payments: Firebase Auth, Stripe
 
-Currently, two official plugins are available:
+Scholar Stream is a full‑stack scholarship management and application platform where students can explore scholarships, apply securely, and track payments, while admins and moderators manage scholarships and users.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+_User (Student)_
 
-## React Compiler
+-> User authentication with Firebase (Email/Password)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+-> Browse all available scholarships
 
-## Expanding the ESLint configuration
+-> View detailed scholarship information
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+-> Apply for scholarships
+
+-> Secure payment using Stripe
+
+-> View payment history & application status
+
+-> Add reviews and ratings for scholarships
+
+_Moderator_
+
+Review and manage scholarship applications
+
+Approve or reject applications
+
+Moderate scholarship reviews
+
+_Admin_
+
+Full user management (make admin / moderator)
+
+Add, update, and delete scholarships
+
+Monitor payments and transactions
+
+Control platform access & roles
+
+Tech Stack
+Frontend
+
+React
+
+React Router DOM
+
+Tailwind CSS + DaisyUI
+
+TanStack React Query
+
+Axios
+
+Firebase Authentication
+
+Backend
+
+Node.js
+
+Express.js
+
+MongoDB (Atlas)
+
+Firebase Admin SDK (JWT verification)
+
+Stripe Payment Gateway
+
+Crypto (Transaction & Tracking IDs)
+
+_Authentication & Security_
+
+Firebase Authentication for client‑side login
+
+Firebase Admin SDK for backend token verification
+
+Role‑based protected routes (User / Moderator / Admin)
+
+Secure Axios interceptor with JWT
+
+_Payment Flow_
+
+User selects a scholarship
+
+Stripe Checkout session is created
+
+Payment is completed securely
+
+Transaction ID & Tracking ID generated
+
+Payment data stored in MongoDB
+
+User redirected to success page
+
+_Deployment_
+
+Frontend deployed on Firebase Hosting
+
+Backend deployed on Vercel
+
+MongoDB Atlas for database
+
+_Future Improvements_
+
+Scholarship bookmarking
+
+Email notifications
+
+Advanced search & filtering
+
+Admin analytics dashboard
+
+_Acknowledgements_
+
+Firebase
+
+Stripe
+
+MongoDB
+
+React Community
